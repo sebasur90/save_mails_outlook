@@ -1,5 +1,6 @@
 import win32com.client
 import pandas as pd
+import datetime
 
 outlook = win32com.client.Dispatch('outlook.application')
 mapi = outlook.GetNamespace("MAPI")
@@ -62,4 +63,5 @@ if __name__ == "__main__":
         bodys, asunto, remitente, mail_remitente, horario, carpeta)
     mails = pd.DataFrame(list(zip(carpeta, horario, remitente, mail_remitente, asunto, bodys)),
                          columns=['carpeta', 'horario', 'remitente', 'mail_remitente', 'asunto', 'bodys'])
-    mails.to_csv("mail.csv", index=False)
+    fecha = datetime.date.today().isoformat()
+    mails.to_csv(f"mails-{fecha}.csv", index=False)
